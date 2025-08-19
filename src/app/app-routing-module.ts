@@ -12,7 +12,7 @@ import { FacturaDetalle } from './pages/factura-detalle/factura-detalle'; // <--
 
 const routes: Routes = [
   // Ruta para el login (esta no está protegida)
-  { path: 'login', component: Login },
+  { path: '', component: Login },
   // La ruta raíz (la principal) ahora muestra el componente Home
   { path: 'home', component: Home }, 
   { path: 'productos', component: Productos },
