@@ -3,6 +3,9 @@
 
     <header class="text-center mb-8">
       <h1 class="text-3xl font-extrabold text-gray-800 mb-1">Novi-Neplo</h1>
+      <button (click)="logout()" class="absolute top-4 right-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+        Cerrar Sesión
+      </button>
     </header>
 
     <nav class="grid grid-cols-1 sm:grid-cols-3 gap-6 place-items-center">
@@ -39,6 +42,7 @@
         <h3 class="text-lg font-semibold text-gray-800 mb-1 group-hover:text-gray-600 transition-colors">Historial</h3>
         <p class="text-sm text-gray-500">Pedidos anteriores.</p>
       </a>
+
 
     </nav>
   </div>

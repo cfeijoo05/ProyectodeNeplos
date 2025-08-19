@@ -11,6 +11,7 @@ import { Pedido } from './pages/pedido/pedido';
 import { Facturas } from './pages/facturas/facturas';
 import { Home } from './pages/home/home';
 import { FacturaDetalle } from './pages/factura-detalle/factura-detalle';
+import { Login } from './pages/login/login';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { FacturaDetalle } from './pages/factura-detalle/factura-detalle';
     Pedido,
     Facturas,
     Home,
-    FacturaDetalle
+    FacturaDetalle,
+    Login
   ],
   imports: [
     BrowserModule,
