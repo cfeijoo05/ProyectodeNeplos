@@ -14,7 +14,7 @@ const routes: Routes = [
   // Ruta para el login (esta no está protegida)
   { path: 'login', component: Login },
   // La ruta raíz (la principal) ahora muestra el componente Home
-  { path: '', component: Home }, 
+  { path: 'home', component: Home }, 
   { path: 'productos', component: Productos },
   { path: 'pedido', component: Pedido },
   { path: 'facturas', component: Facturas },
