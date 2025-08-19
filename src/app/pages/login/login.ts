@@ -32,7 +32,7 @@ export class Login { // o LoginComponent
       response => {
         console.log('Login exitoso', response);
         // Navegamos a la página de inicio
-        this.router.navigate(['/']);
+        this.router.navigate(['/home']);
       },
       // Si hay un error
       error => {
