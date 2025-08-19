@@ -38,6 +38,7 @@ export class AuthService {
 
   // Revisa si el usuario ha iniciado sesión (si existe un token)
   isLoggedIn(): boolean {
-    return this.getToken() !== null;
+    // Esto comprueba que el token no sea null, undefined, o una cadena vacía.
+    return !!this.getToken();
   }
 }
