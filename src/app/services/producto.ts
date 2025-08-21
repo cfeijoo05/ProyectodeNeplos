@@ -20,12 +20,11 @@ export class ProductoService {
   }
   // --- MÉTODO NUEVO PARA ACTUALIZAR ---
   updateProducto(id: number, nuevoPrecio: number): Observable<any> {
-    // La URL para actualizar un producto específico es /api/productos/ID
-    const url = `${this.API_URL}/${id}`; 
-    
-    // Enviamos el nuevo precio en el cuerpo de la petición
-    const body = { precio_por_pulgada: nuevoPrecio }; 
-
+    const url = `${this.API_URL}/${id}`;
+  
+    // LA CORRECCIÓN ESTÁ AQUÍ:
+    const body = { precio: nuevoPrecio }; // Debe ser 'precio'
+  
     return this.http.put(url, body);
   }
 }
