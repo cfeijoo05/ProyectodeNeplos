@@ -8,70 +8,75 @@ import { PedidoService } from '../../services/pedido';
   standalone: false,
   styleUrls: ['./pedido.scss']
 })
-export class Pedido { // o PedidoComponent
+export class Pedido implements OnInit {
 
-  // --- Variables para el estado del componente ---
-  listaProductos: any[] = []; // Para el <select>
-  pedidoActual: any[] = [];   // Las líneas que vamos agregando al pedido
-
-  // --- Variables para el formulario de nueva línea ---
-  productoSeleccionado: any = null;
-  largo: number | null = null;
+  gruposDeProductos: any[] = [];
+  pedidoActual: any[] = [];
+  
+  diametroSeleccionado: any = null;
+  largoSeleccionado: any = null;
   cantidad: number | null = null;
+  largosDisponibles: any[] = [];
 
-  // --- Variables para los totales ---
   subtotal: number = 0;
   descuento: number = 0;
+  montoDescuento: number = 0; // <-- NUEVA VARIABLE
   total: number = 0;
 
-  // Inyectamos los dos servicios que necesitamos
   constructor(
     private productoService: ProductoService,
     private pedidoService: PedidoService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    // Al cargar la página, obtenemos la lista de productos para el dropdown
     this.productoService.getProductos().subscribe(data => {
-      this.listaProductos = data;
+      this.gruposDeProductos = data;
     });
   }
 
+  onDiametroChange(): void {
+    if (this.diametroSeleccionado) {
+      this.largosDisponibles = this.diametroSeleccionado.precios;
+      this.largoSeleccionado = null;
+    } else {
+      this.largosDisponibles = [];
+    }
+  }
+
   agregarLinea(): void {
-    if (!this.productoSeleccionado || !this.largo || !this.cantidad) {
+    if (!this.diametroSeleccionado || !this.largoSeleccionado || !this.cantidad) {
       alert('Por favor, completa todos los campos para agregar un producto.');
       return;
     }
 
-    // Calculamos el subtotal de esta línea específica
-    const subtotalLinea = this.productoSeleccionado.precio_por_pulgada * this.largo * this.cantidad;
+    const subtotalLinea = this.largoSeleccionado.precio * this.cantidad;
 
-    // Añadimos la nueva línea a nuestro pedido actual
     this.pedidoActual.push({
-      producto_id: this.productoSeleccionado.id,
-      nombre: this.productoSeleccionado.diametro,
-      largo: this.largo,
+      producto_id: this.largoSeleccionado.id,
+      nombre: this.diametroSeleccionado.diametro,
+      largo: this.largoSeleccionado.largo,
       cantidad: this.cantidad,
       subtotal: subtotalLinea
     });
 
-    // Reseteamos los campos del formulario
-    this.productoSeleccionado = null;
-    this.largo = null;
+    this.diametroSeleccionado = null;
+    this.largoSeleccionado = null;
     this.cantidad = null;
+    this.largosDisponibles = [];
+
     this.recalcularTotal();
   }
 
   eliminarLinea(index: number): void {
-    this.pedidoActual.splice(index, 1); // Elimina el elemento en la posición 'index'
+    this.pedidoActual.splice(index, 1);
     this.recalcularTotal();
   }
 
   recalcularTotal(): void {
-    // Calculamos el subtotal sumando el subtotal de cada línea
     this.subtotal = this.pedidoActual.reduce((acc, item) => acc + item.subtotal, 0);
-    // Calculamos el total final aplicando el descuento
     const descuentoAplicado = this.subtotal * (this.descuento / 100);
+    
+    this.montoDescuento = descuentoAplicado; // <-- GUARDAMOS EL MONTO
     this.total = this.subtotal - descuentoAplicado;
   }
 
@@ -87,12 +92,9 @@ export class Pedido { // o PedidoComponent
       total_final: this.total
     };
 
-    // LA CORRECCIÓN ESTÁ AQUÍ:
-    // Asegúrate de que estás llamando a this.pedidoService.crearPedido
     this.pedidoService.crearPedido(pedidoParaEnviar).subscribe(
       response => {
         alert(`¡Pedido guardado con éxito! ID del pedido: ${response.pedidoId}`);
-        // Limpiamos todo para un nuevo pedido
         this.pedidoActual = [];
         this.descuento = 0;
         this.recalcularTotal();
@@ -103,5 +105,4 @@ export class Pedido { // o PedidoComponent
       }
     );
   }
-
 }
