@@ -19,7 +19,7 @@ export class Pedido implements OnInit {
   largosDisponibles: any[] = [];
 
   subtotal: number = 0;
-  descuento: number = 0;
+  descuento: number | null = null;
   montoDescuento: number = 0; // <-- NUEVA VARIABLE
   total: number = 0;
 
@@ -74,9 +74,11 @@ export class Pedido implements OnInit {
 
   recalcularTotal(): void {
     this.subtotal = this.pedidoActual.reduce((acc, item) => acc + item.subtotal, 0);
-    const descuentoAplicado = this.subtotal * (this.descuento / 100);
     
-    this.montoDescuento = descuentoAplicado; // <-- GUARDAMOS EL MONTO
+    const porcentajeDescuento = this.descuento || 0;   
+    const descuentoAplicado = this.subtotal * (porcentajeDescuento / 100);
+    
+    this.montoDescuento = descuentoAplicado;
     this.total = this.subtotal - descuentoAplicado;
   }
 
