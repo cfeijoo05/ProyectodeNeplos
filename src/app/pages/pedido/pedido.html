@@ -6,7 +6,6 @@
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
         </svg>
-        Regresar al Menú
       </a>
       <h2 class="text-3xl font-bold text-gray-800 mt-4 text-center">Crear Nuevo Pedido</h2>
     </div>
@@ -15,11 +14,11 @@
       <h3 class="text-xl font-bold text-gray-800 border-b pb-2 mb-4">Agregar Producto</h3>
       <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
         <select [(ngModel)]="diametroSeleccionado" (change)="onDiametroChange()" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-          <option [ngValue]="null" disabled>-- Selecciona un diámetro --</option>
+          <option [ngValue]="null" disabled>Selecciona un diámetro</option>
           <option *ngFor="let grupo of gruposDeProductos" [ngValue]="grupo">{{ grupo.diametro }}</option>
         </select>
         <select [(ngModel)]="largoSeleccionado" [disabled]="!diametroSeleccionado" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-200">
-          <option [ngValue]="null" disabled>-- Selecciona un largo --</option>
+          <option [ngValue]="null" disabled>Selecciona un largo</option>
           <option *ngFor="let item of largosDisponibles" [ngValue]="item">{{ item.largo }}" (Precio: ${{ item.precio }})</option>
         </select>
         <input type="number" placeholder="Cantidad" [(ngModel)]="cantidad" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
