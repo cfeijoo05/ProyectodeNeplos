@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'; 
 import { PedidoService } from '../../services/pedido';
 import { environment } from '../../../environments/environment'; 
+import { Router } from '@angular/router';
+
 
 
 @Component({
@@ -17,7 +19,8 @@ export class FacturaDetalle implements OnInit { // o FacturaDetalleComponent
 
   constructor(
     private route: ActivatedRoute, // Inyectamos ActivatedRoute
-    private pedidoService: PedidoService
+    private pedidoService: PedidoService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -48,6 +51,20 @@ export class FacturaDetalle implements OnInit { // o FacturaDetalleComponent
       const url = `${environment.apiUrl}/api/pedidos/${this.pedidoId}/pdf`;
       // Abrimos la URL en una nueva pestaña para iniciar la descarga
       window.open(url, '_blank');
+    }
+  }
+  eliminarPedido(): void {
+    if (this.pedidoId && confirm('¿Estás seguro de que quieres eliminar este pedido? Esta acción no se puede deshacer.')) {
+      this.pedidoService.deletePedido(this.pedidoId).subscribe(
+        () => {
+          alert('Pedido eliminado con éxito.');
+          this.router.navigate(['/facturas']); // Redirige al historial
+        },
+        error => {
+          alert('Hubo un error al eliminar el pedido.');
+          console.error(error);
+        }
+      );
     }
   }
 }

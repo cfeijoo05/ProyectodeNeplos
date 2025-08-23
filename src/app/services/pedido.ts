@@ -23,4 +23,9 @@ export class PedidoService {
   getPedidoDetalle(id: string): Observable<any> {
     return this.http.get(`${this.API_URL}/${id}`);
   }
+  // ... (métodos existentes)
+
+  deletePedido(id: string): Observable<any> {
+    return this.http.delete(`${this.API_URL}/${id}`);
+  }
 }
