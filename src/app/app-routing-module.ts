@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: 'login', component: Login },
 
   // Rutas protegidas por el AuthGuard
-  { path: 'home', component: Home, canActivate: [AuthGuard] },
+  { path: '/home', component: Home, canActivate: [AuthGuard] },
   { path: 'productos', component: Productos, canActivate: [AuthGuard] },
   { path: 'pedido', component: Pedido, canActivate: [AuthGuard] },
   { path: 'facturas', component: Facturas, canActivate: [AuthGuard] },
