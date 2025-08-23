@@ -15,13 +15,15 @@ const routes: Routes = [
   // Ruta para el login (esta no está protegida)
   { path: '', component: Login },
   // La ruta raíz (la principal) ahora muestra el componente Home
-  { path: 'home', component: Home },
-  { path: 'productos', component: Productos },
-  { path: 'pedido', component: Pedido },
-  { path: 'facturas', component: Facturas },
-  { path: 'facturas/:id', component: FacturaDetalle },
+  { path: 'home', component: Home, canActivate: [AuthGuard]  },
+  { path: 'productos', component: Productos, canActivate: [AuthGuard]  },
+  { path: 'pedido', component: Pedido, canActivate: [AuthGuard]  },
+  { path: 'facturas', component: Facturas, canActivate: [AuthGuard]  },
+  { path: 'facturas/:id', component: FacturaDetalle, canActivate: [AuthGuard]  },
   // Si alguien intenta ir a una ruta que no existe, lo mandamos al inicio
-  { path: '**', redirectTo: '' }
+  { path: '', redirectTo: '', pathMatch: 'full'},
+  // Cualquier otra ruta no definida, también va al login
+  { path: '**', redirectTo: '/login' }
 ];
 
 @NgModule({
