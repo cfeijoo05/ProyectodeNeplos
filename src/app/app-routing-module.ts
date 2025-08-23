@@ -1,35 +1,33 @@
 import { NgModule } from '@angular/core';
+
 import { RouterModule, Routes } from '@angular/router';
 
-// Tus importaciones de componentes
-import { Login } from './pages/login/login';
-import { Home } from './pages/home/home';
-import { Productos } from './pages/productos/productos';
-import { Pedido } from './pages/pedido/pedido';
-import { Facturas } from './pages/facturas/facturas';
-import { FacturaDetalle } from './pages/factura-detalle/factura-detalle';
-import { AuthGuard } from './security/auth-guard'; // El guardia
+import { Login } from './pages/login/login'; // o LoginComponent
+import { Home } from './pages/home/home'; // o HomeComponent
+import { Productos } from './pages/productos/productos'; // o ProductosComponent
+import { Pedido } from './pages/pedido/pedido'; // o PedidoComponent
+import { Facturas } from './pages/facturas/facturas'; // o FacturasComponent
+import { FacturaDetalle } from './pages/factura-detalle/factura-detalle'; // <-- Importa el nuevo componente
+import { AuthGuard } from './security/auth-guard'; // <-- Asegúrate de importar el guardia
 
 const routes: Routes = [
-  // Ruta para el login (sin protección)
-  { path: 'login', component: Login },
 
-  // Rutas protegidas por el AuthGuard
-  { path: '/home', component: Home, canActivate: [AuthGuard] },
-  { path: 'productos', component: Productos, canActivate: [AuthGuard] },
-  { path: 'pedido', component: Pedido, canActivate: [AuthGuard] },
-  { path: 'facturas', component: Facturas, canActivate: [AuthGuard] },
-  { path: 'facturas/:id', component: FacturaDetalle, canActivate: [AuthGuard] },
-
-  // La ruta raíz ahora redirige al login
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
-
-  // Cualquier otra ruta no definida, también va al login
-  { path: '**', redirectTo: '/login' }
+  // Ruta para el login (esta no está protegida)
+  { path: '', component: Login },
+  // La ruta raíz (la principal) ahora muestra el componente Home
+  { path: 'home', component: Home },
+  { path: 'productos', component: Productos },
+  { path: 'pedido', component: Pedido },
+  { path: 'facturas', component: Facturas },
+  { path: 'facturas/:id', component: FacturaDetalle },
+  // Si alguien intenta ir a una ruta que no existe, lo mandamos al inicio
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
+
 export class AppRoutingModule { }
+
