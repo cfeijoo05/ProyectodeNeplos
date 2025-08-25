@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http'; // Importamos el cliente HTTP
-import { Observable } from 'rxjs'; // Importamos Observable
+import { HttpClient } from '@angular/common/http'; 
+import { Observable } from 'rxjs'; 
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -21,13 +21,13 @@ export class ProductoService {
   // --- MÉTODO NUEVO PARA ACTUALIZAR ---
   updateProducto(id: number, nuevoPrecio: number): Observable<any> {
     const url = `${this.API_URL}/${id}`;
-  
-    // LA CORRECCIÓN ESTÁ AQUÍ:
-    const body = { precio: nuevoPrecio }; // Debe ser 'precio'
+    const body = { precio: nuevoPrecio }; 
   
     return this.http.put(url, body);
   }
+  
   createProducto(productoData: any): Observable<any> {
-    return this.http.post(this.API_URL, productoData);
+    return this.http.post(`${this.API_URL}/nuevoproducto`, productoData);
   }
+
 }
