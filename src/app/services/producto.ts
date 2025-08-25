@@ -27,4 +27,7 @@ export class ProductoService {
   
     return this.http.put(url, body);
   }
+  createProducto(productoData: any): Observable<any> {
+    return this.http.post(this.API_URL, productoData);
+  }
 }

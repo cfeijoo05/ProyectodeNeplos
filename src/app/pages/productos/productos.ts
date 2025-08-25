@@ -12,6 +12,13 @@ export class Productos implements OnInit {
   // Guardará los productos agrupados por diámetro
   gruposDeProductos: any[] = [];
 
+  mostrandoFormulario = false;
+  nuevoProducto = {
+    diametro: '',
+    largo_pulgadas: null as number | null,
+    precio: null as number | null
+  };
+
   constructor(private productoService: ProductoService) { }
 
   ngOnInit(): void {
@@ -45,6 +52,26 @@ export class Productos implements OnInit {
       error => {
         console.error('Error al actualizar el producto', error);
         alert('Hubo un error al actualizar el producto.');
+      }
+    );
+  }
+  
+  crearNuevoProducto(): void {
+    if (!this.nuevoProducto.diametro || !this.nuevoProducto.largo_pulgadas || !this.nuevoProducto.precio) {
+      alert('Por favor, completa todos los campos.');
+      return;
+    }
+
+    this.productoService.createProducto(this.nuevoProducto).subscribe(
+      () => {
+        alert('Producto creado con éxito.');
+        this.cargarProductos(); // Recargar la lista
+        this.mostrandoFormulario = false; // Ocultar el formulario
+        this.nuevoProducto = { diametro: '', largo_pulgadas: null, precio: null }; // Resetear
+      },
+      error => {
+        console.error('Error al crear producto', error);
+        alert(error.error.error || 'Hubo un error al crear el producto.');
       }
     );
   }
