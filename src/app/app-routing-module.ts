@@ -12,7 +12,7 @@ import { AuthGuard } from './security/auth-guard'; // <-- Asegúrate de importar
 
 const routes: Routes = [
 
-  // Ruta para el login (esta no está protegida)
+  // Ruta para el login (esta no está protegida
   { path: 'login', component: Login },
   // La ruta raíz (la principal) ahora muestra el componente Home
   { path: 'home', component: Home, canActivate: [AuthGuard]  },
