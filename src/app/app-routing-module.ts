@@ -13,7 +13,7 @@ import { AuthGuard } from './security/auth-guard'; // <-- Asegúrate de importar
 const routes: Routes = [
 
   // Ruta para el login (esta no está protegida
-  { path: '', component: Login },
+  { path: '/login', component: Login },
   // La ruta raíz (la principal) ahora muestra el componente Home
   { path: 'home', component: Home, canActivate: [AuthGuard]  },
   { path: 'productos', component: Productos, canActivate: [AuthGuard]  },
@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: 'facturas', component: Facturas, canActivate: [AuthGuard]  },
   { path: 'facturas/:id', component: FacturaDetalle, canActivate: [AuthGuard]  },
   // Si alguien intenta ir a una ruta que no existe, lo mandamos al inicio
-  { path: '', redirectTo: '', pathMatch: 'full'},
+  { path: '', redirectTo: '/login', pathMatch: 'full'},
   // Cualquier otra ruta no definida, también va al login
   { path: '**', redirectTo: '/login' }
 ];
